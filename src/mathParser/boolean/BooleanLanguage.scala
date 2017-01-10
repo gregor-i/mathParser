@@ -17,9 +17,9 @@
 
 package mathParser.boolean
 
-import mathParser.Language
+import mathParser.{Language, Parser}
 
-object BooleanLanguage extends Language{
+object BooleanLanguage extends Language with Parser{
   override type Skalar = Boolean
   override type Constant = BooleanConstant
   override type UnitaryOperator = BooleanUnitaryOperator

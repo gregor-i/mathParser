@@ -17,15 +17,15 @@
 
 package mathParser.complex
 
-import mathParser.AbstractSyntaxTree._
-import mathParser.{AbstractSyntaxTree, Derive}
+import mathParser.{Derive, Variable}
 
-object ComplexDerive extends Derive[ComplexLanguage.type] with ComplexSyntaxSugar {
-  override def apply(term: AbstractSyntaxTree.Node[ComplexLanguage.type])
-                    (variable: mathParser.Variable): AbstractSyntaxTree.Node[ComplexLanguage.type] = {
+trait ComplexDerive extends Derive{
+  _: ComplexLanguage.type  =>
+  override def derive(term: Node)
+                     (variable: Variable):Node = {
     def derive(term: Node): Node = term match {
-      case Variable(name) if name == variable => constant(1d)
-      case Variable(_) | Constant(_) => constant(0d)
+      case VariableNode(`variable`) => constant(1d)
+      case VariableNode(_) | ConstantNode(_) => constant(0d)
       case UnitaryNode(Neg, child) => neg(derive(child))
       case UnitaryNode(Sin, child) => times(derive(child), cos(child))
       case UnitaryNode(Atan, child) => divided(derive(child), plus(constant(1d), times(child, child)))

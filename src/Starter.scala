@@ -26,10 +26,9 @@ object Starter {
 
     val lang = DoubleLanguage
     val xVariable = Set('x)
-    val parser = Parser(lang, xVariable)
-    val t = parser("2^-x+e")
+    val t = lang.parse("2^-x+e")(xVariable)
     val e = t.map{ term =>
-      Evaluate(term){
+      lang.eval(term){
         case 'x => 25
       }
     }
@@ -42,12 +41,11 @@ object Starter {
 
     val lang = DoubleLanguage
     val xVariable = Set('x)
-    val parser = Parser(lang, xVariable)
-    val t = parser("2^-x")
+    val t = lang.parse("2^-x")(xVariable)
     t.fold{
       println("input could not be parsed")
     }{ term =>
-         println(DoubleDerive(term)('x))
+         println(lang.derive(term)('x))
     }
     println(t)
   }
@@ -56,16 +54,14 @@ object Starter {
     println("exampleBooleans")
     import mathParser.implicits.booleanParseLiterals
     val lang = mathParser.boolean.BooleanLanguage
-    val parser = Parser(lang, Set.empty)
-    println(parser("!false"))
+    println(lang.parse("!false")(Set.empty))
   }
 
   def exampleComplex() = {
     println("exampleComplex")
     import mathParser.implicits.complexParseLiterals
     val lang = mathParser.complex.ComplexLanguage
-    val parser = Parser(lang, Set.empty)
-    println(parser("sin(25 + 3*i)"))
+    println(lang.parse("sin(25 + 3*i)")(Set.empty))
   }
 
   def exampleDerive(s:String) = {
@@ -73,11 +69,10 @@ object Starter {
     import mathParser.implicits.complexParseLiterals
 
     val lang = mathParser.complex.ComplexLanguage
-    val parser = Parser(lang, Set('x))
 
-    val t = parser(s)
+    val t = lang.parse(s)(Set('x))
 
-    val d = t.map(t => ComplexDerive(t)('x))
+    val d = t.map(t => lang.derive(t)('x))
 
     println(t -> d)
   }

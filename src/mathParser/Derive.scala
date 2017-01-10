@@ -17,8 +17,7 @@
 
 package mathParser
 
-import mathParser.AbstractSyntaxTree.Node
-
-trait Derive[Lang <: Language] {
-  def apply(term: Node[Lang])(variable: Variable): Node[Lang]
+trait Derive {
+  _: Language =>
+  def derive(term: Node)(variable: Variable): Node
 }
