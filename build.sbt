@@ -4,7 +4,7 @@ import sbt.Keys._
 // settings and libs
 def commonSettings = Seq(
   version := "0.0.1",
-  scalaVersion := "2.12.0",
+  scalaVersion := "2.12.1",
   scalaSource in Compile := baseDirectory.value / "src",
   scalaSource in Test := baseDirectory.value / "test",
   headers := Map("scala" -> GPLv3("2016", "Gregor Ihmor")),
@@ -21,8 +21,11 @@ def specs2AndScalaCheck = Seq(
   "org.specs2" %% "specs2-scalacheck" % "3.8.6")
   .map(libraryDependencies += _ % "test")
 
+def matryoshka = libraryDependencies += "com.slamdata" %% "matryoshka-core" % "0.16.5"
+
 // projects
 name := "mathParser"
 commonSettings
 spire
 specs2AndScalaCheck
+matryoshka
