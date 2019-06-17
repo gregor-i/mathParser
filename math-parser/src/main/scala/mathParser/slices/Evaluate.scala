@@ -1,7 +1,5 @@
 package mathParser.slices
 
-// compile your AST instead of evaluating the AST directly.
-// This is only intended to be used for tests or single evaluations of the AST
 trait Evaluate {
   _: LanguageOperators with AbstractSyntaxTree =>
 

@@ -28,7 +28,7 @@ trait SpireSyntaxSugar[A] {
     def ^(t2:Node) = BinaryNode(Power, t1, t2)
   }
 
-  def zero = ConstantNode(field.zero)
-  def one = ConstantNode(field.one)
-  def two = ConstantNode(field.fromInt(2))
+  val zero = ConstantNode(field.zero)
+  val one = ConstantNode(field.one)
+  val two = ConstantNode(field.fromInt(2))
 }

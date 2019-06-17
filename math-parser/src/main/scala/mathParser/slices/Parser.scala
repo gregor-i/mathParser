@@ -41,13 +41,15 @@ trait Parser {
       else
         None
 
-    def binaryInfixOperation(input: String): Option[Node] = binaryInfixOperators
-      .flatMap(op => binaryNode(input, op.symbol.name.head, BinaryNode(op, _, _)))
-      .headOption
+    def binaryInfixOperation(input: String): Option[Node] =
+      binaryInfixOperators
+        .flatMap(op => binaryNode(input, op.symbol.name.head, BinaryNode(op, _, _)))
+        .headOption
 
-    def binaryPrefixOperation(input: String): Option[Node] = binaryOperators
-      .find(op => input.matches(s"${op.symbol}\\(.*\\)"))
-      .flatMap(op => binaryNode(input.substring(op.symbol.name.length + 1, input.length - 1), ',', BinaryNode(op, _, _)))
+    def binaryPrefixOperation(input: String): Option[Node] =
+      binaryOperators
+        .find(op => input.startsWith(op.symbol.name))
+        .flatMap(op => binaryNode(input.substring(op.symbol.name.length + 1, input.length - 1), ',', BinaryNode(op, _, _)))
 
     def unitaryPrefixOperation(input: String): Option[Node] = unitaryOperators
       .find {
@@ -55,7 +57,6 @@ trait Parser {
         case op => input.startsWith(op.symbol.name + "(") || input.startsWith(op.symbol.name + " ")
       }
       .flatMap(op => parse(input.stripPrefix(op.symbol.name)).map(UnitaryNode(op, _)))
-      .headOption
 
     val trimmedInput = input.trim()
     constant(trimmedInput) orElse

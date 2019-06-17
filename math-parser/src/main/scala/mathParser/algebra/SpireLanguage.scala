@@ -15,7 +15,8 @@ class SpireLanguage[A](val freeVariables: Seq[Symbol])
     with SpireOptimize[A]
     with FreeVariables
     with Parser
-    with Evaluate {
+    with Evaluate
+    with SpireEquationSolver[A] {
 
   val literalParser: LiteralParser[A] = s => Try(s.toDouble).map(field.fromDouble).toOption
 }

@@ -10,7 +10,7 @@ trait SpireOperators[A] extends LanguageOperators {
   type UnitaryOperator = SpireUnitaryOperator
   type BinaryOperator = SpireBinaryOperator
 
-  sealed abstract class SpireUnitaryOperator(val symbol:Symbol, val apply:(S => S)) extends mathParser.slices.UnitaryOperator[S]
+  sealed abstract class SpireUnitaryOperator(val symbol: Symbol, val apply: A => A) extends mathParser.slices.UnitaryOperator[A]
   case object Neg extends SpireUnitaryOperator('-, field.negate)
   case object Sin extends SpireUnitaryOperator('sin, trig.sin)
   case object Cos extends SpireUnitaryOperator('cos, trig.cos)
@@ -24,14 +24,14 @@ trait SpireOperators[A] extends LanguageOperators {
   case object Exp extends SpireUnitaryOperator('exp, trig.exp)
   case object Log extends SpireUnitaryOperator('log, trig.log)
 
-  sealed abstract class SpireBinaryOperator(val symbol:Symbol, val apply:((S, S) => S)) extends mathParser.slices.BinaryOperator[S]
+  sealed abstract class SpireBinaryOperator(val symbol: Symbol, val apply: (A, A) => A) extends mathParser.slices.BinaryOperator[A]
   case object Plus extends SpireBinaryOperator('+, field.plus)
   case object Minus extends SpireBinaryOperator('-, field.minus)
   case object Times extends SpireBinaryOperator('*, field.times)
   case object Divided extends SpireBinaryOperator('/, field.div)
   case object Power extends SpireBinaryOperator('^, nRoot.fpow)
 
-  abstract class SpireConstant(val symbol:Symbol, val value: S) extends mathParser.slices.Constant[S]
+  abstract class SpireConstant(val symbol:Symbol, val value: A) extends mathParser.slices.Constant[A]
   case object e extends SpireConstant('e, trig.e)
   case object pi extends SpireConstant('pi, trig.pi)
 

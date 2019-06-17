@@ -11,16 +11,16 @@ trait SpireOptimize[A] extends Optimize{
       case UnitaryNode(Neg, UnitaryNode(Neg, child)) => child
     },
     {
-      case BinaryNode(Plus, left, ConstantNode(0d))  => left
-      case BinaryNode(Plus, ConstantNode(0d), right) => right
+      case BinaryNode(Plus, left, `zero`)  => left
+      case BinaryNode(Plus, `zero`, right) => right
     },
     {
-      case BinaryNode(Times, ConstantNode(0d), _) => zero
-      case BinaryNode(Times, _, ConstantNode(0d)) => zero
+      case BinaryNode(Times, `zero`, _) => zero
+      case BinaryNode(Times, _, `zero`) => zero
     },
     {
-      case BinaryNode(Times, left, ConstantNode(1d))  => left
-      case BinaryNode(Times, ConstantNode(1d), right) => right
+      case BinaryNode(Times, left, `one`)  => left
+      case BinaryNode(Times, `one`, right) => right
     },
     {
       case UnitaryNode(Log, UnitaryNode(Exp, child))  => child
@@ -34,6 +34,12 @@ trait SpireOptimize[A] extends Optimize{
     },
     {
       case BinaryNode(Divided, left, right) if left == right => one
-    }
+    },
+    {
+      case BinaryNode(Divided, `one`, BinaryNode(Divided, `one`, child)) => child
+    },
+    {
+      case BinaryNode(Power, child, ConstantNode(-1.0)) => one / child
+    },
   )
 }
