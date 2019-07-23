@@ -15,7 +15,7 @@ class OptimizationSpec extends FunSuite with Matchers {
   testLanguage(MathParser.complexLanguage, "complex language")
 
   def testLanguage[A: Field : Trig : NRoot : LiteralParser](_lang: SpireLanguage[A, Nothing], langName: String) = {
-    val lang = _lang.withVariables[X.type](List(Symbol("x") -> X))
+    val lang = _lang.withVariables[X.type](List("x" -> X))
 
     val identities = Seq(
       "--x" -> "x",
