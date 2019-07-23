@@ -8,7 +8,7 @@ object BooleanLanguage {
       unitaryOperators = List(Not).map(op => (op.symbol, op)),
       binaryPrefixOperators = List.empty,
       binaryInfixOperators = List(And, Or, Equals, Unequals).map(op => (op.symbol, op)),
-      constants = List('true -> true, 'false -> false),
+      constants = List(Symbol("true") -> true, Symbol("false") -> false),
       variables = List.empty
     )
 

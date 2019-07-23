@@ -15,10 +15,10 @@ class ParseSpec extends FunSuite with Matchers {
   case object X extends V
 
   def vList = List(
-    'a -> A,
-    'b -> B,
-    'c -> C,
-    'x -> X)
+    Symbol("a") -> A,
+    Symbol("b") -> B,
+    Symbol("c") -> C,
+    Symbol("x") -> X)
 
   testTemplate(MathParser.doubleLanguage.withVariables[V](vList), "double language")
   testTemplate(MathParser.realLanguage.withVariables[V](vList), "real language")

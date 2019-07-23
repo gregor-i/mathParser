@@ -14,7 +14,7 @@ object Parser {
         case _ =>
       }
       if (c != 0 || k == -1) None
-      else Some(input.take(k), input.drop(k + 1))
+      else Some((input.take(k), input.drop(k + 1)))
     }
 
     def binaryNode(input: String, splitter: Char,
